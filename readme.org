@@ -1,0 +1,2 @@
+* Data Structures & Algorithms
+Part of my daily plan for studying Python by learning and implementing commonly used data structures and algorithms.
