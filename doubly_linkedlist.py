@@ -2,19 +2,23 @@ class Node():
     def __init__(self, data):
         self.data = data
         self.next = None
+        self.prev = None
 
     def __repr__(self):
         return self.data
 
-class MyLinkedList():
+class MyDoublyLinkedList():
     def __init__(self, nodes=None):
         self.head = None
+        self.tail = None
 
         if nodes is not None:
             node = Node(data=nodes.pop(0))
             self.head = node
+
             for item in nodes:
                 node.next = Node(data=item)
+                node.next.prev = node
                 node = node.next
     
     def __iter__(self):
@@ -31,7 +35,7 @@ class MyLinkedList():
             nodes.append(node.data)
             node = node.next
         nodes.append("None")
-        return " -> ".join(nodes) 
+        return " <-> ".join(nodes) 
     
     def __len__(self):
         node_count = 0
@@ -50,6 +54,7 @@ class MyLinkedList():
         for current_node in self:
             pass
         current_node.next = node
+        node.prev = current_node
 
     def add_before(self, target_node_data, new_node):
         if self.head == None:
@@ -62,7 +67,9 @@ class MyLinkedList():
         for curr_node in self:
             if curr_node.data == target_node_data:
                 prev_node.next = new_node
+                new_node.prev = prev_node
                 new_node.next = curr_node
+                curr_node.prev = new_node
                 return
             prev_node = curr_node
             
@@ -75,6 +82,7 @@ class MyLinkedList():
         for curr_node in self:
             if curr_node.data == target_node_data:
                 new_node.next = curr_node.next
+                new_node.prev = curr_node
                 curr_node.next = new_node
                 return
             
@@ -92,6 +100,7 @@ class MyLinkedList():
         for curr_node in self:
             if curr_node.data == target_node_data:
                 prev_node.next = curr_node.next
+                curr_node.next.prev = prev_node
                 return
             prev_node = curr_node
 
